@@ -57,6 +57,18 @@ def deleteBranches(projectId, branches, privateToken) {
     return ["Success"]
 }
 
+def getLatestReferences(projectId, referenceType, gitlabToken, latestNumber) {
+    def referenceList = getAllBranches(projectId, referenceType, gitlabToken)
+    def sortedList = referenceList.sort { a, b -> 
+        def dateTemp1 = a.commit.committed_date.split("T")[0].split("-")
+        def dateTemp2 = b.commit.committed_date.split("T")[0].split("-")
+        def date1 = new Date(dateTemp1[0].toInteger(), dateTemp1[1].toInteger(), dateTemp1[2].toInteger())
+        def date2 = new Date(dateTemp2[0].toInteger(), dateTemp2[1].toInteger(), dateTemp2[2].toInteger())
+        return date2 <=> date1
+    }
+    return sortedList[0..latestNumber]
+}
+
 def main() {
     def helpText = "Usage: groovy delete-old-branches.groovy [mode] [action] [action-parameter]\nmode: list or delete\naction: oldest or regex\naction-parameter: number of branches to delete or regex to filter branches"
     if (args.size() == 0 || args.size() > 0 && args[0] == "help") {
