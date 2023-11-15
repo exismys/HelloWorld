@@ -7,3 +7,12 @@ elif [ ${1,,} = help ]; then
 else
 	echo "I don't know who you are but you're not the boss of me!"
 fi
+
+HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://www.google.com)
+if [ "$HTTP_STATUS" != "200" ]; then
+	echo "Google is up!";
+	echo "hey";
+	exit 0;
+else
+	echo "Google is down!"
+fi
