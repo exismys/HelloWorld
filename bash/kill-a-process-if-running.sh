@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PID=$(ps -ef | grep node | awk '{print $2}' | head -n 1)
+PID=$(ps -ef | grep node | grep -v grep | awk '{print $2}')
 if [ -z "$PID" ];
 then
       echo "Process not running"
