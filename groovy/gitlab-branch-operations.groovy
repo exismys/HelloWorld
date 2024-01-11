@@ -26,7 +26,7 @@ def getAllBranches(projectId, referenceType, gitlabToken) {
     return referenceList
 }
 
-def getOldestBranches(projectId, referenceType, pages, gitlabToken, numberOldest) {
+def getOldestBranches(projectId, referenceType, gitlabToken, numberOldest) {
     def referenceList = getAllBranches(projectId, referenceType, gitlabToken)
     def sortedList = referenceList.sort { a, b -> 
         def dateTemp1 = a.commit.committed_date.split("T")[0].split("-")
@@ -39,7 +39,7 @@ def getOldestBranches(projectId, referenceType, pages, gitlabToken, numberOldest
     return sortedList
 }
 
-def getBranchesWithRegex(projectId, referenceType, pages, gitlabToken, regex) {
+def getBranchesWithRegex(projectId, referenceType, gitlabToken, regex) {
     def referenceList = getAllBranches(projectId, referenceType, gitlabToken)
     filteredList = referenceList.findAll { it.name ==~ regex }.collect { it.name }
     return filteredList
@@ -66,7 +66,8 @@ def getLatestReferences(projectId, referenceType, gitlabToken, latestNumber) {
         def date2 = new Date(dateTemp2[0].toInteger(), dateTemp2[1].toInteger(), dateTemp2[2].toInteger())
         return date2 <=> date1
     }
-    return sortedList[0..latestNumber]
+    sortedList = sortedList[0..latestNumber].collect { it.name }
+    return sortedList
 }
 
 def main() {
@@ -85,10 +86,10 @@ def main() {
     def final DELETE = args[0] == "delete" ? "true" : "false"
     def final ACTION = args[1]
     def final ACTION_PARAMETER = args[2]
-    def final TOKEN = "token"
+    def final TOKEN = ""
 
     if (ACTION == "oldest") {
-        def oldestBranches = getOldestBranches(454, "branches", 20, TOKEN, ACTION_PARAMETER.toInteger())
+        def oldestBranches = getOldestBranches(450, "branches", TOKEN, ACTION_PARAMETER.toInteger())
         println(oldestBranches)
         if (DELETE == "true") {
             def result = deleteBranches(454, oldestBranches, TOKEN)
@@ -96,11 +97,22 @@ def main() {
         }
         return
     }
+    if (ACTION == "latest") {
+        def latestBranches = getLatestReferences(450, "branches", TOKEN, ACTION_PARAMETER.toInteger())
+        for (branch in latestBranches) {
+            println(branch)
+        }
+        if (DELETE == "true") {
+            def result = deleteBranches(450, latestBranches, TOKEN)
+            println(result)
+        }
+        return
+    }
     if (ACTION == "regex") {
-        def branches = getBranchesWithRegex(454, "branches", 20, TOKEN, "${ACTION_PARAMETER}")
+        def branches = getBranchesWithRegex(450, "branches", TOKEN, "${ACTION_PARAMETER}")
         println(branches)
         if (DELETE == "true") {
-            def result = deleteBranches(454, branches, TOKEN)
+            def result = deleteBranches(450, branches, TOKEN)
             println(result)
         }
         return
