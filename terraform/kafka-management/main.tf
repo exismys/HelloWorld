@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "kafka" {
-  bootstrap_servers = ["localhost:9092"]
+  bootstrap_servers = ["52.16.219.83:19092"]
   tls_enabled = false
 }
 
