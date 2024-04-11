@@ -6,8 +6,11 @@ canvas.height = window.innerHeight;
 const c = canvas.getContext("2d");
 
 const colors = ["#FFEBB2", "#E9A89B", "#D875C7", "#912BBC"]
-const numOfCircles = 100000000;
+const numOfCircles = 1000;
 const maxBubbleRadius = 100;
+const impactRadius = 50;
+const radiusRangeStart = 1;
+const radiusRangeEnd = 5;
 
 let mouse = {
     x: undefined,
@@ -54,7 +57,7 @@ class Circle {
         this.x += this.dx;
         this.y += this.dy;
 
-        if (Math.abs(this.x - mouse.x) < 50 && Math.abs(this.y - mouse.y) < 50 && this.radius < maxBubbleRadius) {
+        if (Math.abs(this.x - mouse.x) < impactRadius && Math.abs(this.y - mouse.y) < impactRadius && this.radius < maxBubbleRadius) {
             this.radius += 1;
         } else if (this.radius > this.minRadius) {
             this.radius -= 1;
@@ -66,7 +69,7 @@ let circles = []
 
 function init() {
     for (let i = 0; i < numOfCircles; i++) {
-        const r = Math.floor(Math.random() * 6 + 1)
+        const r = Math.floor(Math.random() * radiusRangeEnd + radiusRangeStart)
         const x = Math.floor(Math.random() * (window.innerWidth - r + 1))
         const y = Math.floor(Math.random() * (window.innerHeight - r + 1))
         const color = colors[Math.floor(Math.random() * 4)]
