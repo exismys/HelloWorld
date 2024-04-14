@@ -3,6 +3,9 @@ const canvas = document.querySelector("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let ww = window.innerWidth;
+let wh = window.innerHeight;
+
 const c = canvas.getContext("2d");
 
 const colors = ["#FFEBB2", "#E9A89B", "#D875C7", "#912BBC"]
@@ -11,6 +14,8 @@ const maxBubbleRadius = 100;
 const impactRadius = 50;
 const radiusRangeStart = 1;
 const radiusRangeEnd = 5;
+const velocityRangeStart = -1
+const velocityRangeEnd = 1
 
 let mouse = {
     x: undefined,
@@ -23,8 +28,10 @@ window.addEventListener("mousemove", (event) => {
 })
 
 window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    ww = window.innerWidth;
+    wh = window.innerHeight;
+    canvas.width = ww;
+    canvas.height = wh;
     init();
 })
 
@@ -73,21 +80,59 @@ function init() {
         const x = Math.floor(Math.random() * (window.innerWidth - r + 1))
         const y = Math.floor(Math.random() * (window.innerHeight - r + 1))
         const color = colors[Math.floor(Math.random() * colors.length)]
-        const dx = Math.random() * 3 - 1.5
-        const dy = Math.random() * 3 - 1.5
+        const dx = Math.random() * 2 - 1
+        const dy = Math.random() * 2 - 1
         circles.push(new Circle(x, y, r, color, dx, dy))
     }
 }
 
 init()
 
+function renderHeaderText() {
+    c.font = "70px Monospace";
+    c.fillStyle = "rgba(0, 0, 0, 0.5)";
+    c.fillText("Exismys", 50, 100);
+    c.font = "50px Monospace";
+    const headerTexts = ["Intro", "Skills", "Contact", "Quotes"]
+    const initialPositionX = 50;
+    let initialPositionY = 200;
+    for (let i = 0; i < headerTexts.length; i++) {
+        const text = headerTexts[i];
+        const width = c.measureText(text).width;
+        const height = c.measureText(text).actualBoundingBoxAscent + c.measureText(text).actualBoundingBoxDescent;
+        c.fillRect(initialPositionX, initialPositionY - height, width, height);
+        c.fillText(text, initialPositionX, initialPositionY);
+        initialPositionY += 100;
+    }
+}
+
+function renderContentText() {
+    c.fillRect(420, 50, 950, 680)
+    c.font = "20px Monospace";
+    c.fillStyle = "rgba(255, 255, 255, 0.8)"
+    const sampleText = "Hello Exismys";
+    const textHeight = c.measureText(sampleText).actualBoundingBoxAscent + c.measureText(sampleText).actualBoundingBoxDescent
+    const content = "Hello there! Welcome to the crazy website - full canvas fun\nA new line of text let's see if it works"
+    const textArray = content.split("\n");
+    const initialOffsetX = 425;
+    let initialOffsetY = 80;
+    for (let i = 0; i < textArray.length; i++) {
+        const text = textArray[i];
+        c.fillText(text, initialOffsetX, initialOffsetY);
+        initialOffsetY += textHeight + 20;
+    }
+    
+}
+
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
     for (let i = 0; i < numOfCircles; i++) {
-        circles[i].draw()
-        circles[i].update()
+        circles[i].draw();
+        circles[i].update();
     }
+    renderHeaderText();
+    renderContentText();
 }
 
 animate();
