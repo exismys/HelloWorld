@@ -1,4 +1,4 @@
-LS CP MV RM ✔️
+LS CP MV RM 
 ---
 
 CHMOD CHOWN ✔️
@@ -95,3 +95,8 @@ DIG
 
 NSLOOKUP
 ---
+
+FIND
+---
+
+

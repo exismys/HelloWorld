@@ -72,39 +72,67 @@ class Circle {
     }
 }
 
-let circles = []
+class TextButton {
+	constructor(text, fontSize, fontStyle, positionX, positionY) {
+		this.text = text;
+        this.fontSize = fontSize;
+        this.fontStyle = fontStyle;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        c.font = `${this.fontSize} ${this.fontStyle}`
+		this.textWidth = c.measureText(text).width
+        this.textHeight = c.measureText(text).actualBoundingBoxAscent + c.measureText(text).actualBoundingBoxDescent;
+    }
+
+    renderText() {
+        c.font = `${this.fontSize} ${this.fontStyle}`
+        c.fillStyle = "rgba(0, 0, 0, 0.5)";
+        c.fillText(this.text, this.positionX, this.positionY)
+    }
+
+    renderTextButton() {
+        c.font = `${this.fontSize} ${this.fontStyle}`
+        c.fillStyle = "rgba(0, 0, 0, 0.5)";
+        c.fillRect(this.positionX, this.positionY - this.textHeight, this.textWidth, this.textHeight);
+        c.fillText(this.text, this.positionX, this.positionY)
+    }
+
+    updateTextButton() {
+        // Insert logic for animating text buttons
+    }
+}
+
+let circles = [];
+let textButtons = [];
+let header;
 
 function init() {
+    // Initialize circles
     for (let i = 0; i < numOfCircles; i++) {
-        const r = Math.floor(Math.random() * radiusRangeEnd + radiusRangeStart)
-        const x = Math.floor(Math.random() * (window.innerWidth - r + 1))
-        const y = Math.floor(Math.random() * (window.innerHeight - r + 1))
-        const color = colors[Math.floor(Math.random() * colors.length)]
-        const dx = Math.random() * 2 - 1
-        const dy = Math.random() * 2 - 1
-        circles.push(new Circle(x, y, r, color, dx, dy))
+        const r = Math.floor(Math.random() * radiusRangeEnd + radiusRangeStart);
+        const x = Math.floor(Math.random() * (window.innerWidth - r + 1));
+        const y = Math.floor(Math.random() * (window.innerHeight - r + 1));
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const dx = Math.random() * 2 - 1;
+        const dy = Math.random() * 2 - 1;
+        circles.push(new Circle(x, y, r, color, dx, dy));
+    }
+
+    // Intialize the header
+    header = new TextButton("Exismys", "70px", "Monospace", 50, 100)
+
+    // Initialize text buttons
+    const navButtons = ["Intro", "Skills", "Contact", "Quotes"]
+    const initialPositionX = 50;
+    let initialPositionY = 200;
+    for (let i = 0; i < navButtons.length; i++) {
+        let text = navButtons[i]
+        textButtons.push(new TextButton(text, "50px", "Monospace", initialPositionX, initialPositionY))
+        initialPositionY += 100
     }
 }
 
 init()
-
-function renderHeaderText() {
-    c.font = "70px Monospace";
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillText("Exismys", 50, 100);
-    c.font = "50px Monospace";
-    const headerTexts = ["Intro", "Skills", "Contact", "Quotes"]
-    const initialPositionX = 50;
-    let initialPositionY = 200;
-    for (let i = 0; i < headerTexts.length; i++) {
-        const text = headerTexts[i];
-        const width = c.measureText(text).width;
-        const height = c.measureText(text).actualBoundingBoxAscent + c.measureText(text).actualBoundingBoxDescent;
-        c.fillRect(initialPositionX, initialPositionY - height, width, height);
-        c.fillText(text, initialPositionX, initialPositionY);
-        initialPositionY += 100;
-    }
-}
 
 function renderContentText() {
     c.fillRect(420, 50, 950, 680)
@@ -116,23 +144,36 @@ function renderContentText() {
     const textArray = content.split("\n");
     const initialOffsetX = 425;
     let initialOffsetY = 80;
-    for (let i = 0; i < textArray.length; i++) {
-        const text = textArray[i];
-        c.fillText(text, initialOffsetX, initialOffsetY);
-        initialOffsetY += textHeight + 20;
-    }
+	for (let i = 0; i < textArray.length; i++) {
+    	    const text = textArray[i];
+    	    c.fillText(text, initialOffsetX, initialOffsetY);
+    	    initialOffsetY += textHeight + 20;
+    	}
     
 }
 
 function animate() {
     requestAnimationFrame(animate);
+
+    // Clear canvas
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    for (let i = 0; i < numOfCircles; i++) {
-        circles[i].draw();
-        circles[i].update();
+
+    // Render and update circles
+    // for (let i = 0; i < numOfCircles; i++) {
+    //     circles[i].draw();
+    //     circles[i].update();
+    // }
+
+    // Render header text
+    header.renderText()
+
+    // Render text button 
+    for (let i = 0; i < textButtons.length; i++) {
+        textButtons[i].renderTextButton()
     }
-    renderHeaderText();
-    renderContentText();
+
+    // Render content
+    renderContentText()
 }
 
 animate();
