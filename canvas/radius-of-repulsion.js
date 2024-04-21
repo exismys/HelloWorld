@@ -86,6 +86,8 @@ class TextButton {
         c.font = `${this.fontSize} ${this.fontStyle}`
 		this.textWidth = c.measureText(text).width
         this.textHeight = getTextHeight(text);
+        this.fillStyleText = "rgba(0, 0, 0, 0.5)"
+        this.fillStyleRect = "rgba(255, 255, 255, 0)"
     }
 
     renderText() {
@@ -96,13 +98,18 @@ class TextButton {
 
     renderTextButton() {
         c.font = `${this.fontSize} ${this.fontStyle}`
-        c.fillStyle = "rgba(0, 0, 0, 0.5)";
+        c.fillStyle = this.fillStyleRect
         c.fillRect(this.positionX, this.positionY - this.textHeight, this.textWidth, this.textHeight);
+        c.fillStyle = this.fillStyleText
         c.fillText(this.text, this.positionX, this.positionY)
     }
 
     updateTextButton() {
-        // Insert logic for animating text buttons
+        if (mouse.x >= this.positionX && mouse.x <= this.positionX + this.textWidth && mouse.y >= this.positionY - this.textHeight && mouse.y <= this.positionY) {
+            this.fillStyleRect = "rgba(0, 0, 0, 0.5)"
+        } else {
+            this.fillStyleRect = "rgba(255, 255, 255, 0)"
+        }
     }
 }
 
@@ -157,6 +164,7 @@ function init() {
 
     // Initialize text buttons
     const navButtons = ["Intro", "Skills", "Contact", "Quotes"]
+    textButtons = [];
     const initialPositionX = 50;
     let initialPositionY = 200;
     for (let i = 0; i < navButtons.length; i++) {
@@ -188,6 +196,7 @@ function animate() {
     // Render text button 
     for (let i = 0; i < textButtons.length; i++) {
         textButtons[i].renderTextButton()
+        textButtons[i].updateTextButton()
     }
 
     // Render content text
