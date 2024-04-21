@@ -35,6 +35,10 @@ window.addEventListener("resize", () => {
     init();
 })
 
+function getTextHeight(text) {
+    return c.measureText(text).actualBoundingBoxAscent + c.measureText(text).actualBoundingBoxDescent;
+}
+
 class Circle {
     constructor(x, y, radius, color, dx, dy) {
         this.x = x
@@ -81,7 +85,7 @@ class TextButton {
         this.positionY = positionY;
         c.font = `${this.fontSize} ${this.fontStyle}`
 		this.textWidth = c.measureText(text).width
-        this.textHeight = c.measureText(text).actualBoundingBoxAscent + c.measureText(text).actualBoundingBoxDescent;
+        this.textHeight = getTextHeight(text);
     }
 
     renderText() {
@@ -99,6 +103,36 @@ class TextButton {
 
     updateTextButton() {
         // Insert logic for animating text buttons
+    }
+}
+
+function renderContent(rectangle, text) {
+    const marginX = 5
+    const marginY = 20
+    const wordSpacing = 10
+    const lineSpacing = 20
+    c.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height)
+    c.font = "20px Monospace";
+    c.fillStyle = "rgba(255, 255, 255, 0.8)"
+    const textHeight = getTextHeight(text)
+    const initialOffsetX = rectangle.x + marginX
+    const initialOffsetY = rectangle.y + textHeight + marginY
+    let offsetX = initialOffsetX
+    let offsetY = initialOffsetY
+    let lines = text.split("\n")
+    for (let line of lines) {
+        let words = line.split(" ")
+        for (let word of words) {
+            const textWidth = c.measureText(word).width
+            if (offsetX + textWidth > rectangle.x + rectangle.width - marginX) {
+                offsetX = initialOffsetX
+                offsetY += textHeight + lineSpacing
+            }
+            c.fillText(word, offsetX, offsetY)
+            offsetX += textWidth + wordSpacing
+        }
+        offsetX = initialOffsetX
+        offsetY += textHeight + lineSpacing
     }
 }
 
@@ -130,27 +164,11 @@ function init() {
         textButtons.push(new TextButton(text, "50px", "Monospace", initialPositionX, initialPositionY))
         initialPositionY += 100
     }
+
+    // Initialize content
 }
 
 init()
-
-function renderContentText() {
-    c.fillRect(420, 50, 950, 680)
-    c.font = "20px Monospace";
-    c.fillStyle = "rgba(255, 255, 255, 0.8)"
-    const sampleText = "Hello Exismys";
-    const textHeight = c.measureText(sampleText).actualBoundingBoxAscent + c.measureText(sampleText).actualBoundingBoxDescent
-    const content = "Hello there! Welcome to the crazy website - full canvas fun\nA new line of text let's see if it works"
-    const textArray = content.split("\n");
-    const initialOffsetX = 425;
-    let initialOffsetY = 80;
-	for (let i = 0; i < textArray.length; i++) {
-    	    const text = textArray[i];
-    	    c.fillText(text, initialOffsetX, initialOffsetY);
-    	    initialOffsetY += textHeight + 20;
-    	}
-    
-}
 
 function animate() {
     requestAnimationFrame(animate);
@@ -172,8 +190,15 @@ function animate() {
         textButtons[i].renderTextButton()
     }
 
-    // Render content
-    renderContentText()
+    // Render content text
+    let contentArea = {
+        x: 420,
+        y: 50,
+        width: 950,
+        height: 680
+    }
+    const contentText = "You are something the whole universe is doing in the same way that a wave is something that the whole ocean is doing.\nThe real, deep down you is the whole universe.\nTry and imagine what it will be like to go to sleep and never wake up.\nWhat was it like to wake up after having never gone to sleep? That was when you were born.\nNo amount of anxiety makes any difference to anything that is going to happen.\nFaith is, above all, openness; an act of trust in the unknown."
+    renderContent(contentArea, contentText)
 }
 
 animate();
