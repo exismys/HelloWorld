@@ -1,8 +1,14 @@
 import pymssql
 
-conn = pymssql.connect(server="ip", port="1433", user="ritesh.patel", password="password", database="db")
+host = ""
+port = ""
+user = ""
+password = ""
+dbName = ""
+
+conn = pymssql.connect(server=host, port=port, user=user, password=password, database=dbName)
 
 cursor = conn.cursor()
 cursor.execute("SELECT * FROM  <table_name>")
-data=cursor.fetchall()
+data = cursor.fetchall()
 print(data)
