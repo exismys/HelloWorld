@@ -141,10 +141,10 @@ class TextButton {
 }
 
 function renderContent(rectangle, text) {
-  const marginX = 5
+  const marginX = 15
   const marginY = 20
-  const wordSpacing = 10
-  const lineSpacing = 20
+  const wordSpacing = 8
+  const lineSpacing = 15
   c.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height)
   c.font = "20px Monospace";
   c.fillStyle = "rgba(255, 255, 255, 0.8)"
@@ -214,10 +214,10 @@ function animate() {
   c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
    // Render circles 
-   for (let i = 0; i < numOfCircles; i++) {
-     circles[i].draw();
-     circles[i].update();
-   }
+   // for (let i = 0; i < numOfCircles; i++) {
+   //   circles[i].draw();
+   //   circles[i].update();
+   // }
 
   // Render header text
   header.renderText()
@@ -239,7 +239,7 @@ function animate() {
     height: 680
   }
   const contentText = [
-    "You are something the whole universe is doing in the same way that a wave is something that the whole ocean is doing.\nThe real, deep down you is the whole universe.\nTry and imagine what it will be like to go to sleep and never wake up.\nWhat was it like to wake up after having never gone to sleep? That was when you were born.\nNo amount of anxiety makes any difference to anything that is going to happen.\nFaith is, above all, openness; an act of trust in the unknown.",
+    "You are something the whole universe is doing in the same way that a wave is something that the whole ocean is doing.\n\nThe real, deep down you is the whole universe.\nTry and imagine what it will be like to go to sleep and never wake up.\n\nWhat was it like to wake up after having never gone to sleep? That was when you were born.\nNo amount of anxiety makes any difference to anything that is going to happen.\nFaith is, above all, openness; an act of trust in the unknown.",
     "Skills",
     "Contact",
     "Quotes"
