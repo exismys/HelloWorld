@@ -27,7 +27,8 @@ var chessBoard ChessBoard = ChessBoard{
 
 
 /* Function to display the chess board */
-func displayBoard(cb ChessBoard) {
+func displayBoard(cb ChessBoard, perspective string) {
+  /* Raw chess board array */
   fmt.Println()
   fmt.Print("   ")
   for i := 0; i < 8; i++ {
@@ -47,6 +48,11 @@ func displayBoard(cb ChessBoard) {
     fmt.Println()
   }
   fmt.Println()
+
+  /* If perspective is white */
+
+
+  /*If perspective is black */
 }
 
 
@@ -83,7 +89,7 @@ func processMove(cb ChessBoard, move string) (bool, error) {
 
 
 func main() {
-  displayBoard(chessBoard)
+  displayBoard(chessBoard, "white")
 
   /* Start Game */
   var move string
@@ -102,7 +108,7 @@ func main() {
       panic(err.Error())
     }
     fmt.Println(turn, "moved:", move)
-    displayBoard(chessBoard)
     turn = "black"
+    displayBoard(chessBoard, turn)
   }
 }
