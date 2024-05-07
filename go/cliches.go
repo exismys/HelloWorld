@@ -6,10 +6,12 @@ import (
 )
 
 /* ASCII color codes */
-const BG_WHITE = ""
-const BG_BLACK = ""
-const BG_YELLOW = ""
-const RESET = "" 
+const BG_WHITE = "\033[47m"
+const BG_BLACK = "\033[40m"
+const FG_WHITE = "\033[37m"
+const FG_BLACK = "\033[30m"
+const BG_YELLOW = "\033[43m"
+const RESET = "\033[0m" 
 
 
 /* Declare Chess Board */
@@ -53,10 +55,29 @@ func displayBoard(cb ChessBoard, perspective string) {
 
   /* If perspective is white */
   if (perspective == "white") {
+    bgColor := ""
+    reset := ""
     for i := 7; i >= 0; i-- {
-      fmt.Print("  | ")
+      fmt.Print("  |", bgColor, " ", reset)
       for j := 0; j < 8; j++ {
-        fmt.Print(cb[i][j], " | ")
+        fmt.Print(bgColor, cb[i][j], " ", reset, "|")
+        if bgColor == "" {
+          bgColor = BG_BLACK
+          reset = RESET
+        } else {
+          bgColor = ""
+          reset = ""
+        }
+        if j != 7 {
+         fmt.Print(bgColor, " ", reset)
+        }
+      }
+      if bgColor == "" {
+        bgColor = BG_BLACK
+        reset = RESET
+      } else {
+        bgColor = ""
+        reset = ""
       }
       fmt.Println()
       fmt.Print("   ")
@@ -69,10 +90,29 @@ func displayBoard(cb ChessBoard, perspective string) {
 
   /* If perspective is black */
   if (perspective == "black") {
+    bgColor := ""
+    reset := ""
     for i := 0; i < 8; i++ {
-      fmt.Print("  | ")
+      fmt.Print("  |", bgColor, " ", reset)
       for j := 7; j >= 0; j-- {
-        fmt.Print(cb[i][j], " | ")
+        fmt.Print(bgColor, cb[i][j], " ", reset, "|")
+        if bgColor == "" {
+          bgColor = BG_BLACK
+          reset = RESET
+        } else {
+          bgColor = ""
+          reset = ""
+        }
+        if j != 0 {
+         fmt.Print(bgColor, " ", reset)
+        }
+      }
+      if bgColor == "" {
+        bgColor = BG_BLACK
+        reset = RESET
+      } else {
+        bgColor = ""
+        reset = ""
       }
       fmt.Println()
       fmt.Print("   ")
