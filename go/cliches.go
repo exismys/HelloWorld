@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "errors"
+  "strconv"
 )
 
 /* ASCII color codes */
@@ -130,21 +131,34 @@ func displayBoard(cb ChessBoard, perspective string) {
 /* Check if the chess move is valid */
 func isValidMove(cb ChessBoard, move string) bool {
   var l int = len(move)
-  fmt.Println(l)
   if l != 2 && l != 3 && l != 5 && l != 6 {
     return false
   }
-  var piece string = string(move[0])
-  var currentPositionX int
-  var currentPositionY int
-  var destPositionX int
-  var destPositionY int
-  if l >= 5 {
+  var piece string
+  var currentPositionX, currentPositionY, destPositionX, destPositionY int
+  var check bool
+  switch l {
+  case 2:
+    piece = "p"
+    destPositionX = int(move[0] - []byte("a")[0] + 1)
+    destPositionY, _ = strconv.Atoi(move[1:2])
+  case 3:
+    piece = move[0:1]
+    destPositionX = int(move[1] - []byte("a")[0] + 1)
+    destPositionY, _ = strconv.Atoi(move[2:3])
+  case 5, 6:
+    piece = move[0:1]
+    currentPositionX = int(move[1] - []byte("a")[0] + 1)
+    currentPositionY, _ = strconv.Atoi(move[2:3])
+    destPositionX = int(move[3] - []byte("a")[0] + 1)
+    destPositionY, _ = strconv.Atoi(move[4:5])
+    if l == 6 {
+      check = true
+    }
   }
-
-  fmt.Println(piece, currentPositionX, currentPositionY, destPositionX, destPositionY)
+  fmt.Println(piece)
+  fmt.Println(piece, currentPositionX, currentPositionY, destPositionX, destPositionY, check)
   return true
-
 }
 
 
