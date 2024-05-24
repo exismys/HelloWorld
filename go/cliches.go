@@ -129,10 +129,17 @@ func displayBoard(cb ChessBoard, perspective string) {
 
 
 /* Check if the chess move is valid */
-func isValidMove(cb ChessBoard, move string) bool {
+func isValidMove(cb ChessBoard, piece string, cx int, cy int, dx int, dy int, check bool) bool {
+  return true
+
+}
+
+
+/* Function to process the move */
+func processMove(cb ChessBoard, move string) (bool, error) {
   var l int = len(move)
   if l != 2 && l != 3 && l != 5 && l != 6 {
-    return false
+    return false, errors.New("Invalid move!")
   }
   var piece string
   var currentPositionX, currentPositionY, destPositionX, destPositionY int
@@ -158,13 +165,8 @@ func isValidMove(cb ChessBoard, move string) bool {
   }
   fmt.Println(piece)
   fmt.Println(piece, currentPositionX, currentPositionY, destPositionX, destPositionY, check)
-  return true
-}
 
-
-/* Function to process the move */
-func processMove(cb ChessBoard, move string) (bool, error) {
-  if !isValidMove(cb, move) {
+  if !isValidMove(cb, piece, currentPositionX, currentPositionY, destPositionX, destPositionY, check) {
     return false, errors.New("Invalid move!")
   }
    
