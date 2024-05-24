@@ -4,7 +4,7 @@
     config = function()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
-        ensure_installed = {"lua", "javascript"},
+        ensure_installed = {"lua", "javascript", "go", "python"},
         sync_install = false,
         hightlight = {enable = true },
         indent = { enable = true }
