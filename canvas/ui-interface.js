@@ -9,13 +9,6 @@ let wh = window.innerHeight;
 const c = canvas.getContext("2d");
 
 const colors = ["#FFEBB2", "#E9A89B", "#D875C7", "#912BBC"]
-const numOfCircles = 1000;
-const maxBubbleRadius = 100;
-const impactRadius = 50;
-const radiusRangeStart = 1;
-const radiusRangeEnd = 5;
-const velocityRangeStart = -1
-const velocityRangeEnd = 1
 
 let mouse = {
   x: undefined,
@@ -44,7 +37,10 @@ window.addEventListener("keypress", (event) => {
   }
 })
 
-/* Hover on a text button */
+/* Hover on a text button
+ * This function is overriding the mouse control hover
+ * ToDo: Fix this function so that it does not override mouse controls
+ * */
 function hover(textButtonToHover) {
   for (let textButton of textButtons) {
     if (textButton != textButtonToHover) {
@@ -58,42 +54,6 @@ function getTextHeight(text) {
   return c.measureText(text).actualBoundingBoxAscent + c.measureText(text).actualBoundingBoxDescent;
 }
 
-class Circle {
-  constructor(x, y, radius, color, dx, dy) {
-    this.x = x
-    this.y = y
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = radius;
-    this.minRadius = radius;
-    this.color = color
-  }
-
-  draw() {
-    c.beginPath();
-    c.arc(this.x, this.y, this.radius, Math.PI * 2, false);
-    c.fillStyle = this.color;
-    c.fill();
-  }
-
-  update() {
-    if (this.x > window.innerWidth - this.radius || this.x < this.radius) {
-      this.dx = - this.dx;
-    }
-    if (this.y > window.innerHeight - this.radius || this.y < this.radius) {
-      this.dy = - this.dy;
-    }
-
-    this.x += this.dx;
-    this.y += this.dy;
-
-    if (Math.abs(this.x - mouse.x) < impactRadius && Math.abs(this.y - mouse.y) < impactRadius && this.radius < maxBubbleRadius) {
-      this.radius += 1;
-    } else if (this.radius > this.minRadius) {
-      this.radius -= 1;
-    }
-  }
-}
 
 class TextButton {
 	constructor(text, fontSize, fontStyle, positionX, positionY) {
@@ -140,6 +100,7 @@ class TextButton {
   }
 }
 
+// Render text inside a reactangle
 function renderContent(rectangle, text) {
   const marginX = 15
   const marginY = 20
@@ -170,23 +131,11 @@ function renderContent(rectangle, text) {
   }
 }
 
-let circles = [];
 var textButtons = [];
 var initialHoverIndex;
 let header;
 
 function init() {
-  // Initialize circles
-  for (let i = 0; i < numOfCircles; i++) {
-    const r = Math.floor(Math.random() * radiusRangeEnd + radiusRangeStart);
-    const x = Math.floor(Math.random() * (window.innerWidth - r + 1));
-    const y = Math.floor(Math.random() * (window.innerHeight - r + 1));
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const dx = Math.random() * 2 - 1;
-    const dy = Math.random() * 2 - 1;
-    circles.push(new Circle(x, y, r, color, dx, dy));
-  }
-
   // Intialize the header
   header = new TextButton("Exismys", "70px", "Monospace", 50, 100)
 
@@ -201,8 +150,6 @@ function init() {
     textButtons.push(new TextButton(text, "50px", "Monospace", initialPositionX, initialPositionY))
     initialPositionY += 100
   }
-
-  // Initialize content
 }
 
 init()
@@ -212,13 +159,7 @@ function animate() {
 
   // Clear canvas
   c.clearRect(0, 0, window.innerWidth, window.innerHeight)
-
-   // Render circles 
-   // for (let i = 0; i < numOfCircles; i++) {
-   //   circles[i].draw();
-   //   circles[i].update();
-   // }
-
+   
   // Render header text
   header.renderText()
 
@@ -228,10 +169,11 @@ function animate() {
     textButtons[i].renderTextButton()
 
     /* Uncomment for mouse control */
-    // textButtons[i].updateTextButton()
+    textButtons[i].updateTextButton()
   }
 
   // Render content text
+  // This only renders specific text inside a specific rectangle provided.
   let contentArea = {
     x: 420,
     y: 50,
