@@ -1,16 +1,22 @@
 const canvas = document.querySelector("canvas");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let ww = window.innerWidth
+let wh = window.innerHeight
+
+canvas.width = ww
+canvas.height = wh
 
 const c = canvas.getContext("2d");
 
+// Control configs
 const colors = ["#FFEBB2", "#E9A89B", "#D875C7", "#912BBC"]
 const numOfCircles = 1000;
 const maxBubbleRadius = 100;
 const impactRadius = 50;
 const radiusRangeStart = 1;
 const radiusRangeEnd = 5;
+const velocityRangeStart = -1
+const velocityRangeEnd = 1
 
 let mouse = {
     x: undefined,
@@ -23,8 +29,10 @@ window.addEventListener("mousemove", (event) => {
 })
 
 window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    ww = window.innerWidth;
+    wh = window.innerHeight;
+    canvas.width = ww;
+    canvas.height = wh;
     init();
 })
 
@@ -73,8 +81,8 @@ function init() {
         const x = Math.floor(Math.random() * (window.innerWidth - r + 1))
         const y = Math.floor(Math.random() * (window.innerHeight - r + 1))
         const color = colors[Math.floor(Math.random() * colors.length)]
-        const dx = Math.random() * 3 - 1.5
-        const dy = Math.random() * 3 - 1.5
+        const dx = Math.random() * 2 - 1
+        const dy = Math.random() * 2 - 1
         circles.push(new Circle(x, y, r, color, dx, dy))
     }
 }
