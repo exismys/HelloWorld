@@ -30,7 +30,7 @@ func quote() {
 
   quote := quotes[rand.Intn(len(quotes))]
   fmt.Println()
-  color.Magenta("  %s", quote.Q)
+  color.Yellow("  %s", quote.Q)
   color.Cyan("   \u2014 %s", quote.A)
   fmt.Println()
 }
