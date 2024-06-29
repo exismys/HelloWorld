@@ -1,7 +1,12 @@
-LS CP MV RM 
+LS CP MV RM ~~
 ---
 
-CHMOD CHOWN ✔️
+TAR
+---
+- `tar -zcvf file.tar.gz /path/to/dir/` - gzip, compress, verbose, target file name
+- `tar -zxvf file.tar.gz` - gzip, extract, verbose, input file name
+
+CHMOD CHOWN ~~ 
 ---
 - chmod +x <filename>      Execute access for every user.
 - chmod 700 <filename>        Read(4), Write(2) and Execute(1) access for user(owner). ugo
@@ -10,8 +15,10 @@ CHMOD CHOWN ✔️
 - sudo chown <username> <filename.txt>
 - sudo chown -R <username>:<groupname> <directoryname>
 
-GREP
+GREP ~~
 ---
+- grep -ir <string>
+- cat <file> | grep <string>
 
 SED
 ---
@@ -19,7 +26,7 @@ SED
 AWK
 ---
 
-CURL
+CURL ~~
 ---
 - curl <url>
 - curl -X GET <url>
@@ -28,28 +35,32 @@ CURL
 - curl -X DELETE <resource-url> -H “Private-Token:<private-token>”
 - curl -X UPDATE <resource-url> -d ‘{“name”: “value”}’ -H “Content-Type=application/json&Private-Token=<private-token>”
 
-WGET
+WGET ~~
 ---
 - wget <file-url>
 - wget -O <name> <file-url>
 - wget -i <file-name> (Specify each file-to-be-downloaded link in a new line in the file)
 - wget -P <path> <file-url>
 
-APT ✔️
+APT ~~
 ---
 - sudo apt update
 - sudo apt install <package_name>
 - sudo apt remove <package_name>
 
-UNAME ✔️
+DPKG ~~
+---
+- sudo dpkg -i <package_path>
+
+UNAME ~~
 ---
 - uname -a
 
-FREE ✔️
+FREE ~~
 ---
 free -h
 
-DF DU ✔️
+DF DU ~~
 ---
 - df -h
 - df -h </home>
@@ -57,30 +68,30 @@ DF DU ✔️
 - du -sh <work>
 - du -h -d 1 | sort -nr | head -n 10
 
-PS ✔️
+PS ~~
 ---
 - ps -ef
 
-PING ✔️
+PING ~~
 ---
 - ping <domain_name>
 - ping <host_ip>
 
-TRACEROUTE ✔️
+TRACEROUTE ~~
 ---
 - traceroute <domain_name>
 - traceroute <host_ip>
 
-TELNET ✔️
+TELNET ~~
 ---
 - telnet <host_ip> <port>
 
-IP ✔️
+IP ~~
 ---
 - ip link (list all the network interfaces)
 - ip addr (ip addr associated with network interfaces)
 
-SSH ✔️
+SSH ~~
 ---
 - ssh-keygen
 - ssh <username>@<hostname>
@@ -99,5 +110,4 @@ NSLOOKUP
 FIND
 ---
 
-TAR
----
+
