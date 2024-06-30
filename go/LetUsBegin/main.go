@@ -5,36 +5,95 @@ import (
   "net/http"
   "encoding/json"
   "math/rand"
+  "time"
+  "os"
   "github.com/fatih/color"
 )
 
+
+const quoteCacheFile = "/tmp/quote-cache.json"
+const quoteApi = "https://zenquotes.io/api/quotes"
+
+
 type Quote struct {
-  Q string `json:"q"` // the quote
-  A string `json:"a"` // author
-  H string `json:"h"` // html
+  Quote string `json:"q"`
+  Author string `json:"a"`
+  Html string `json:"h"`
 }
 
-func quote() {
-  const quoteApi = "https://zenquotes.io/api/quotes"
+type QuoteCache struct {
+  Data []Quote
+  Timestamp time.Time
+}
+
+
+func main() {
+
+  quote, err := quote()
+  if err != nil {
+    panic(err)
+  }
+
+  fmt.Println()
+  color.Yellow("  %s", quote.Quote)
+  color.Cyan("   \u2014 %s", quote.Author)
+  fmt.Println()
+}
+
+
+func quote() (*Quote, error) {
+  
+  cached, err := readCache()
+  if (err == nil && time.Since(cached.Timestamp) < time.Hour * 24) {
+    quotes := cached.Data
+    randIndex := rand.Intn(len(quotes))
+    return &quotes[randIndex], nil
+  }
+
   res, err := http.Get(quoteApi)
   if (err != nil) {
-    fmt.Printf("Error fetching quote of the day: %v",  err)
+    return nil, err
   }
   defer res.Body.Close()
   
   var quotes []Quote
   if err := json.NewDecoder(res.Body).Decode(&quotes); err != nil {
-    fmt.Printf("Error decoding JSON response: %v\n", err)
-    return
+    return nil, err
   }
 
-  quote := quotes[rand.Intn(len(quotes))]
-  fmt.Println()
-  color.Yellow("  %s", quote.Q)
-  color.Cyan("   \u2014 %s", quote.A)
-  fmt.Println()
+  err = writeCache(quotes)
+  if err != nil {
+    fmt.Printf("Warning: Could not write to cache: %v", err)
+  }
+
+  return &quotes[rand.Intn(len(quotes))], nil
 }
 
-func main() {
-  quote()
+func readCache() (*QuoteCache, error){
+  file, err := os.Open(quoteCacheFile)
+  if err != nil {
+    return nil, err
+  }
+  defer file.Close()
+
+  var cache QuoteCache
+  err = json.NewDecoder(file).Decode(&cache)
+  
+  return &cache, err
+}
+
+
+func writeCache(quotes []Quote) error {
+  cache := QuoteCache {
+    Data: quotes,
+    Timestamp: time.Now(),
+  }
+
+  file, err := os.Create(quoteCacheFile)
+  if err != nil {
+    return err
+  }
+  defer file.Close()
+  
+  return json.NewEncoder(file).Encode(&cache)
 }
