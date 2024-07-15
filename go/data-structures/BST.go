@@ -57,6 +57,22 @@ func (bst *BST) inorder(head *Node) {
 	}
 }
 
+func (bst *BST) preorder(head *Node) {
+  if head != nil {
+    fmt.Println(head.data)
+    bst.preorder(head.left)
+    bst.preorder(head.right)
+  }
+}
+
+func (bst *BST) postorder(head *Node) {
+  if head != nil {
+    bst.postorder(head.left)
+    bst.postorder(head.right)
+    fmt.Println(head.data)
+  }
+}
+
 // Iterative traversals
 func (bst *BST) inorderIterative() {
 	stack := []*Node{}
@@ -75,8 +91,40 @@ func (bst *BST) inorderIterative() {
 
 		current = current.right
 	}
-
 }
+
+func (bst *BST) preorderIterative() {
+  stack := []*Node{}
+  current := bst.root
+
+  for current != nil || len(stack) > 0 {
+    for (current != nil) {
+      fmt.Println(current.data)
+      stack = append(stack, current)
+      current = current.left
+    }
+    
+
+    current = stack[len(stack) - 1]
+    stack = stack[:len(stack) - 1]
+    
+    current = current.right
+    
+  }
+}
+
+//func (bst *BST) postorderIterative() {
+//  stack := []*Node{}
+//  current := bst.root
+//
+//  for current != nil || len(stack) > 0 {
+//    for (current != nil) {
+//      
+//    }
+//
+//  }
+//}
+
 
 func main() {
 	var bst = newBST()
@@ -85,5 +133,8 @@ func main() {
 	bst.insert(20)
 	bst.insert(15)
 	//  bst.inorder(bst.root)
-	bst.inorderIterative()
+	// bst.inorderIterative()
+//  bst.preorder(bst.root)
+//  bst.postorder(bst.root)
+  bst.preorderIterative()
 }
