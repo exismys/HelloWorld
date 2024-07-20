@@ -5,5 +5,6 @@ vim.cmd("set expandtab")
 vim.cmd("set number")
 vim.cmd("set relativenumber")
 vim.cmd("set clipboard+=unnamedplus")
+vim.cmd("set nowrap")
 vim.g.mapleader = " "
 
