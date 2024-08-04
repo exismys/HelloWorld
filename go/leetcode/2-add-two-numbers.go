@@ -1,13 +1,9 @@
 package main
 
-import "fmt"
-
-
 type ListNode struct {
   val int
   Next *ListNode
 }
-
 
 func addTwoNumbers(ln1 *ListNode, ln2 *ListNode) *ListNode {
   carry := 0
@@ -37,35 +33,3 @@ func addTwoNumbers(ln1 *ListNode, ln2 *ListNode) *ListNode {
 }
 
 
-func main() {
-
-  ln1 := &ListNode{
-    val: 2,
-    Next: &ListNode{
-      val: 4,
-      Next: &ListNode{
-        val: 3,
-        Next: nil,
-      },
-    },
-  }
-
-  ln2 := &ListNode{
-    val: 5,
-    Next: &ListNode{
-      val: 6,
-      Next: &ListNode{
-        val: 4,
-        Next: nil,
-      },
-    },
-  }
-
-  ln3 := addTwoNumbers(ln1, ln2)
-
-  for ln3 != nil {
-    fmt.Printf("%d", ln3.val)
-    ln3 = ln3.Next
-  }
-
-}

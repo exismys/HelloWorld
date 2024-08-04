@@ -1,16 +1,5 @@
 package main
 
-import (
-  "fmt"
-)
-
-func main() {
-  nums := []int{2, 7, 11, 15}
-  target := 9
-  indices := twoSum(nums, target)
-  fmt.Printf("[%d %d]", indices[0], indices[1])
-}
-
 func twoSum(nums []int, target int) []int {
   m := make(map[int]int)
 
