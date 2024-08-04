@@ -1,12 +1,15 @@
+// Setup canvas
 const canvas = document.querySelector("canvas")
+const ctx = canvas.getContext("2d")
+let displayWidth = 1280
+let displayHeight = 720
+canvas.style.width = displayWidth
+canvas.style.height = displayHeight
+const dpr = window.devicePixelRation || 1
+canvas.width = displayWidth * dpr
+canvas.height = displayHeight * dpr
+ctx.scale(dpr, dpr)
 
-function setupCanvas() {
-  canvas.width = 1280
-  canvas.height = 720
-  return canvas.getContext("2d")
-}
-
-const ctx = setupCanvas()
 
 class Circle {
   constructor(x, y, r) {
