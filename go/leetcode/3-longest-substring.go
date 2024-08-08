@@ -20,23 +20,4 @@ func lenLongestSubstring(str string) int {
   return length
 }
 
-// Let's improve upon it
-// Turns out I have written a very flawed logic
-// func lenLongestSubstring2(str string) int {
-//   length := 0
-//   left := 0
-//   charPresent := make(map[rune]bool)
-//   var index int
-//   var char rune
-//   for index, char = range str {
-//     if charPresent[char] == true {
-//       length = max(length, index - left)
-//       left++
-//     } else {
-//       charPresent[char] = true
-//     }
-//   }
-//   length = max(length, index - left + 1)
-//   return length
-// 
-// }
+// Todo: Let's improve upon it

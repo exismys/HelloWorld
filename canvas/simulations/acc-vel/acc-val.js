@@ -1,15 +1,14 @@
 // Setup canvas
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
-let displayWidth = 1280
-let displayHeight = 720
-canvas.style.width = displayWidth
-canvas.style.height = displayHeight
-const dpr = window.devicePixelRation || 1
+let displayWidth = 600
+let displayHeight = 600
+canvas.style.width = `${displayWidth}px`
+canvas.style.height = `${displayHeight}px`
+const dpr =  window.devicePixelRatio || 1
 canvas.width = displayWidth * dpr
 canvas.height = displayHeight * dpr
 ctx.scale(dpr, dpr)
-
 
 class Circle {
   constructor(x, y, r) {
@@ -46,6 +45,8 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   circle.draw()
   circle.update()
+  ctx.font = "32px Arial"
+  ctx.fillText(dpr, 100, 100)
 }
 
 animate()
