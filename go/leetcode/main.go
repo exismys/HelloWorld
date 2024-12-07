@@ -43,7 +43,12 @@ func main() {
 	// fmt.Println(lenLongestSubstring("aaa"))
 
 	// 27 - remove element
-	nums := []int{5, 4, 10, 11, 9, 24, 6, 10, 10, 4}
-	fmt.Println(removeElement(nums, 10))
+	// nums := []int{5, 4, 10, 11, 9, 24, 6, 10, 10, 4}
+	// fmt.Println(removeElement(nums, 10))
+	// fmt.Println(nums)
+
+	// 26 - remove duplicates from sorted array
+	nums := []int{1, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6}
+	fmt.Println(removeDuplicates(nums))
 	fmt.Println(nums)
 }
