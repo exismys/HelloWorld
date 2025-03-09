@@ -65,3 +65,8 @@ sudo apt install htop -y
 echo "***** Installing vlc *****"
 echo ""
 sudo apt install vlc -y
+
+# Install brave browser
+echo "***** Installing brave browser"
+echo ""
+sudo curl -fsS https://dl.brave.com/install.sh | sh
