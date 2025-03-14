@@ -70,3 +70,8 @@ sudo apt install vlc -y
 echo "***** Installing brave browser"
 echo ""
 sudo curl -fsS https://dl.brave.com/install.sh | sh
+
+# Install Heroku CLI
+echo "***** Installing heroku CLI"
+echo ""
+sudo curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
