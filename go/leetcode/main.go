@@ -48,7 +48,12 @@ func main() {
 	// fmt.Println(nums)
 
 	// 26 - remove duplicates from sorted array
-	nums := []int{1, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6}
-	fmt.Println(removeDuplicates(nums))
-	fmt.Println(nums)
+	// nums := []int{1, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6}
+	// fmt.Println(removeDuplicates(nums))
+	// fmt.Println(nums)
+
+	// 4 - median of two sorted arrays
+	nums1 := []int{1, 2}
+	nums2 := []int{3, 4}
+	fmt.Println(findMedianSortedArrays(nums1, nums2))
 }
