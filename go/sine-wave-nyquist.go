@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"math"
 	"time"
 
@@ -36,6 +37,7 @@ func play(context *oto.Context, freq int) {
 	audioReader := bytes.NewReader(audioData)
 	player := context.NewPlayer(audioReader)
 	defer player.Close()
+	fmt.Println("Playing sound with frequency: ", freq)
 	player.Play()
 	time.Sleep(time.Second * 2)
 }
