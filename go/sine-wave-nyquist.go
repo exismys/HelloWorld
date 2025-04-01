@@ -15,12 +15,12 @@ const (
 	volume     = 0.2
 )
 
-func generateNyquistSample() []byte {
+func generateNyquistSample(freq int) []byte {
 	tau := math.Pi * 2
 	nsamps := duration * sampleRate
 	audioData := make([]byte, 0, nsamps*2)
 	for i := 0; i < nsamps; i++ {
-		angle := tau * frequency * float64(i) / sampleRate
+		angle := tau * float64(freq) * float64(i) / sampleRate
 		sample := int16(math.Sin(angle) * math.MaxInt16 * volume)
 		buf := []byte{byte(sample), byte(sample >> 8)}
 		audioData = append(audioData, buf...)
@@ -28,18 +28,9 @@ func generateNyquistSample() []byte {
 	return audioData
 }
 
-func play() {
-	op := &oto.NewContextOptions{}
-	op.SampleRate = sampleRate
-	op.ChannelCount = 2
-	op.Format = oto.FormatSignedInt16LE
+func play(context *oto.Context, freq int) {
 
-	context, ready, err := oto.NewContext(op)
-	if err != nil {
-		panic(err)
-	}
-	<-ready
-	audioData := generateNyquistSample()
+	audioData := generateNyquistSample(freq)
 	// fmt.Println(audioData)
 	// fmt.Println(len(audioData))
 	audioReader := bytes.NewReader(audioData)
@@ -50,5 +41,19 @@ func play() {
 }
 
 func main() {
-	play()
+	op := &oto.NewContextOptions{}
+	op.SampleRate = sampleRate
+	op.ChannelCount = 2
+	op.Format = oto.FormatSignedInt16LE
+	context, ready, err := oto.NewContext(op)
+	if err != nil {
+		panic(err)
+	}
+	<-ready
+
+	freq := frequency
+	for i := 0; i < 20; i++ {
+		freq += 20
+		play(context, freq)
+	}
 }
