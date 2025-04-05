@@ -16,3 +16,14 @@ vim.opt.rtp:prepend(lazypath)
 require("vim-options")
 require("lazy").setup("plugins")
 
+-- Function to set the title dynamically
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function()
+        local dir = vim.fn.expand("%:p:h:t")  -- Get parent directory name
+        local file = vim.fn.expand("%:t")      -- Get current file name
+        vim.opt.titlestring = "nvim - " .. dir .. "/" .. file
+        vim.opt.title = true
+    end,
+})
+

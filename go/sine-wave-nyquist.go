@@ -54,7 +54,7 @@ func main() {
 	<-ready
 
 	freq := frequency
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 100; i++ {
 		freq += 20
 		play(context, freq)
 	}
