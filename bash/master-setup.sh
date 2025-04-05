@@ -75,3 +75,13 @@ sudo curl -fsS https://dl.brave.com/install.sh | sh
 echo "***** Installing heroku CLI"
 echo ""
 sudo curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+# Install xclip
+echo "***** Installing xclip *****"
+echo ""
+sudo apt install xclip
+
+# Install ripgrep
+echo "****** Installing ripgrep *****"
+echo ""
+sudo apt install ripgrep
