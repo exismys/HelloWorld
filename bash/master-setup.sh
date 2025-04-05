@@ -49,6 +49,12 @@ echo "***** Setting up dependencies for Golang Raylib bindings"
 echo ""
 sudo apt-get install libgl1-mesa-dev libxi-dev libxcursor-dev libxrandr-dev libxinerama-dev libwayland-dev libxkbcommon-dev
 
+# Install dependencies for Golang oto
+echo "***** Setting up dependencies for Golang oto package *****"
+echo ""
+sudo apt install pkg-config -y
+sudo apt install libasound2-dev -y
+
 # Setup nvm and node
 echo "***** Setting up nvn and node *****"
 echo ""
@@ -79,9 +85,14 @@ sudo curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 # Install xclip
 echo "***** Installing xclip *****"
 echo ""
-sudo apt install xclip
+sudo apt install xclip -y
 
 # Install ripgrep
 echo "****** Installing ripgrep *****"
 echo ""
-sudo apt install ripgrep
+sudo apt install ripgrep -y
+
+# Install cloc
+echo "****** Installing cloc *****"
+echo ""
+sudo apt install cloc -y
