@@ -1,5 +1,5 @@
- return {
-   -- this is a comment
+return {
+  -- this is a comment
   "rebelot/kanagawa.nvim",
   name = "kanagawa",
   priority = 1000,
@@ -30,9 +30,10 @@
           Keyword = { fg = colors.palette.samuraiRed, bold = true },
           Function = { fg = colors.palette.waveAqua2, bold = true },
           String = { fg = colors.palette.dragonBlue },
+          Visual = { bg = "#3b4252" },
         }
       end,
     })
-    vim.cmd.colorscheme "kanagawa"
-  end
+    vim.cmd.colorscheme("kanagawa")
+  end,
 }

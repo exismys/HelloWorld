@@ -1,29 +1,23 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
 
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
-end
-
-vim.opt.rtp:prepend(lazypath)
-
-require("vim-options")
-require("lazy").setup("plugins")
-
--- Function to set the title dynamically
 vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = "*",
-    callback = function()
-        local dir = vim.fn.expand("%:p:h:t")  -- Get parent directory name
-        local file = vim.fn.expand("%:t")      -- Get current file name
-        vim.opt.titlestring = "nvim - " .. dir .. "/" .. file
-        vim.opt.title = true
-    end,
-})
+  pattern = "*",
+  callback = function()
+    local filepath = vim.fn.expand("%:p")
+    local search_path = vim.fn.fnamemodify(filepath, ":p:h") .. ";"
+    local git_dir = vim.fn.finddir(".git", search_path)
 
+    local project_root
+    if git_dir ~= "" then
+      -- Get the parent of the .git directory (i.e., project root)
+      local abs_project_root = vim.fn.fnamemodify(git_dir, ":p:h:h")
+      project_root = vim.fn.fnamemodify(abs_project_root, ":t")
+    else
+      -- Fallback to current file's parent directory name
+      project_root = vim.fn.fnamemodify(filepath, ":p:h:t")
+    end
+    vim.opt.titlestring = "~ " .. project_root
+    vim.opt.title = true
+  end,
+})
