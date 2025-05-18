@@ -41,9 +41,9 @@ func main() {
 	// }
 
 	// 3 - longest substring
-	fmt.Println(lenLongestSubstring("aaa"))
-	fmt.Println(lenLongestSubstring2("aaa"))
-	fmt.Println(lenLongestSubstring2("abcaatcd"))
+	// fmt.Println(lenLongestSubstring("aaa"))
+	// fmt.Println(lenLongestSubstring2("aaa"))
+	// fmt.Println(lenLongestSubstring2("abcaatcd"))
 
 	// 27 - remove element
 	// nums := []int{5, 4, 10, 11, 9, 24, 6, 10, 10, 4}
@@ -62,8 +62,9 @@ func main() {
 	// fmt.Println(findMedianSortedArrays(nums1, nums2))
 
 	// 5 - longest palindrome substring
-	// fmt.Println("\n5. Longest Palindrome Substring")
-	// str := "abatatata"
-	// str = longestPalindrome(str)
-	// fmt.Println(str)
+	fmt.Println("\n5. Longest Palindrome Substring")
+	str := "abatatata"
+	str = "bb"
+	str = longestPalindrome(str)
+	fmt.Println(str)
 }

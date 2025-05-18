@@ -33,7 +33,7 @@ func lenLongestSubstring2(str string) int {
 			i++
 		}
 		m[str[j]] = true
-		length = max(length, j - i + 1)
+		length = max(length, j-i+1)
 	}
 	return length
 }
