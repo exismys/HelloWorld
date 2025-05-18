@@ -1,6 +1,7 @@
 package main
 
 // Brute force
+// O(n3)
 func longestPalindrome(s string) string {
 	for i := len(s); i > 0; i-- {
 		for j := 0; j < len(s)-i; j++ {
@@ -24,3 +25,6 @@ func palindrome(s string) bool {
 	}
 	return true
 }
+
+// Check palindrome for each character as if it's the center
+// O(n2)
