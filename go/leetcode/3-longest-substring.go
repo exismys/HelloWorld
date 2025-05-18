@@ -5,7 +5,7 @@ package main
 func lenLongestSubstring(str string) int {
 	length := 0
 outer:
-	for i := 0; i < len(str); i++ {
+	for i := range len(str) {
 		charPresent := make(map[byte]bool)
 		counter := 0
 		for j := i; j < len(str); j++ {
@@ -21,4 +21,19 @@ outer:
 	return length
 }
 
-// Todo: Let's improve upon it
+// Sliding window with map
+// O(n)
+func lenLongestSubstring2(str string) int {
+	length := 0
+	m := make(map[byte]bool)
+	i := 0
+	for j := range len(str) {
+		for m[str[j]] {
+			m[str[i]] = false
+			i++
+		}
+		m[str[j]] = true
+		length = max(length, j - i + 1)
+	}
+	return length
+}
