@@ -28,8 +28,7 @@ func palindrome(s string) bool {
 
 // Check palindrome for each character as if it's the center
 // O(n2)
-// To Do: Correct this
-func longestPalindrome2(s string) string {
+func longestpalindrome2(s string) string {
 	length := 0
 	str := ""
 	for i := range s {
