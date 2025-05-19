@@ -63,8 +63,9 @@ func main() {
 
 	// 5 - longest palindrome substring
 	fmt.Println("\n5. Longest Palindrome Substring")
-	str := "abatatata"
-	str = "bb"
-	str = longestPalindrome(str)
-	fmt.Println(str)
+	// str := "abatatata"
+	str := "bb"
+	// str = longestPalindrome(str)
+	println(longestPalindrome2(str))
+
 }
