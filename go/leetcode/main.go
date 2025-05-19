@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	// 1 - two Sum
@@ -62,10 +60,10 @@ func main() {
 	// fmt.Println(findMedianSortedArrays(nums1, nums2))
 
 	// 5 - longest palindrome substring
-	fmt.Println("\n5. Longest Palindrome Substring")
+	// fmt.Println("\n5. Longest Palindrome Substring")
 	// str := "abatatata"
-	str := "bb"
+	// str := "bb"
 	// str = longestPalindrome(str)
-	println(longestPalindrome2(str))
-
+	// println(longestPalindrome2(str))
+	fmt.Println(longestPalindrome3("abata"))
 }
