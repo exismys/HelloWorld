@@ -1,0 +1,8 @@
+# Compiled stuff
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
