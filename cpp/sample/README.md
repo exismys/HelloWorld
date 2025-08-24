@@ -5,6 +5,11 @@ g++ -std=c++20 -Wall -Wextra -Wpedantic -O2 -g -c main.cpp -o main.o
 g++ -std=c++20 -Wall -Wextra -Wpedantic -O2 -g -c audio.cpp -o audio.o
 ```
 
+Compile while linking SFML audio lib
+```bash
+g++ main.cpp -o playnote -lsfml-audio -lsfml-system
+```
+
 ## Link C++
 g++ main.o my_math.o -o app.out
 g
