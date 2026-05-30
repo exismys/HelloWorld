@@ -1,0 +1,10 @@
+[package]
+name = "belight"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+winit = "0.30.13"
+softbuffer = "0.4.8"
+rand = "0.10.1"
+fontdue = "0.9"
